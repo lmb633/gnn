@@ -28,11 +28,12 @@ class Net(torch.nn.Module):
 
     def forward(self, data):
         x, edge_index, batch = data.x, data.edge_index, data.batch
+        print('data', x, edge_index, batch, data.y)
         x = self.item_embedding(x)
         x = x.squeeze(1)
 
         x = F.relu(self.conv1(x, edge_index))
-
+        print('x after conv1',x.shape)
         x, edge_index, _, batch, _, _ = self.pool1(x, edge_index, None, batch)
         x1 = torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
 

@@ -29,7 +29,7 @@ class YooChooseBinaryDataset(InMemoryDataset):
         data_list = []
 
         # process by session_id
-        grouped = df.groupby('session_id')
+        grouped = df[:100].groupby('session_id')
         for session_id, group in tqdm(grouped):
             sess_item_id = LabelEncoder().fit_transform(group.item_id)
             group = group.reset_index(drop=True)
@@ -49,6 +49,25 @@ class YooChooseBinaryDataset(InMemoryDataset):
 
             data = Data(x=x, edge_index=edge_index, y=y)
             data_list.append(data)
+            print(data_list)
 
         data, slices = self.collate(data_list)
         torch.save((data, slices), self.processed_paths[0])
+
+
+from torch_geometric.data import DataLoader
+from models import Net
+import time
+if __name__ == '__main__':
+    dataset = YooChooseBinaryDataset(root='data/')
+    train_loader = DataLoader(dataset, batch_size=1)
+    model = Net()
+    model.train()
+    for i, data in enumerate(train_loader):
+        # Move to GPU, if available
+        label = data.y
+        print(data)
+        # Forward prop.
+        out = model(data)
+        print(out)
+        time.sleep(100)
