@@ -3,8 +3,8 @@ import pandas as pd
 import torch
 from sklearn.preprocessing import LabelEncoder
 
-from config import c_file, b_file, c_index, b_index
 from utils import get_logger
+from yoochoose.config import c_file, b_file, c_index, b_index
 
 if __name__ == '__main__':
     logger = get_logger()

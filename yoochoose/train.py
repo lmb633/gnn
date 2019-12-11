@@ -1,14 +1,14 @@
 import numpy as np
 import torch
+from config import device, grad_clip, print_freq, batch_size
+from data_gen import YooChooseBinaryDataset
 from sklearn.metrics import roc_auc_score
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
 from torch_geometric.data import DataLoader
 
-from config import device, grad_clip, print_freq, batch_size
-from data_gen import YooChooseBinaryDataset
-from models import Net
 from utils import parse_args, save_checkpoint, AverageMeter, clip_gradient, get_logger
+from yoochoose.models import Net
 
 
 def train_net(args):

@@ -2,7 +2,7 @@ import torch
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # sets device for model and PyTorch tensors
 
-embed_dim = 128
+embed_dim = 16
 batch_size = 1024
 num_embeds = 52739
 
